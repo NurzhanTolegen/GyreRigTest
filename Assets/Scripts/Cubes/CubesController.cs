@@ -19,29 +19,36 @@ public class CubesController : MonoBehaviour {
     private List<Transform> cubes = new List<Transform>();
 
     void Start() {
-        timeField.onValueChanged.AddListener(OnTimeChanged);
-        speedField.onValueChanged.AddListener(OnSpeedChanged);
-        distanceField.onValueChanged.AddListener(OnDistanceChanged);
+        timeField.onEndEdit.AddListener(OnTimeEndEdit);
+        speedField.onEndEdit.AddListener(OnSpeedEndEdit);
+        distanceField.onEndEdit.AddListener(OnDistanceEndEdit);
 
         timeField.text = time.ToString();
         speedField.text = speed.ToString();
         distanceField.text = distance.ToString();
     }
 
-    public void OnTimeChanged(string text) {
+    public void OnTimeEndEdit(string text) {
         float result = time;
-        if(float.TryParse(text, out result))
+        if (float.TryParse(text, out result) && result > 0)
             time = result;
+        else
+            timeField.text = time.ToString();
+
     }
-    public void OnSpeedChanged(string text) {
+    public void OnSpeedEndEdit(string text) {
         float result = speed;
-        if (float.TryParse(text, out result))
+        if (float.TryParse(text, out result) && result > 0)
             speed = result;
+        else
+            speedField.text = speed.ToString();
     }
-    public void OnDistanceChanged(string text) {
+    public void OnDistanceEndEdit(string text) {
         float result = distance;
-        if (float.TryParse(text, out result))
+        if (float.TryParse(text, out result) && result > 0)
             distance = result;
+        else
+            distanceField.text = distance.ToString();
     }
 
     void Update() {
